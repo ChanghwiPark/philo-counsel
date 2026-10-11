@@ -82,12 +82,9 @@ export function isTelemetryExcludedUser(explicitUserId?: string): boolean {
   return false;
 }
 
-// Privacy Configuration:
-// Raw dilemma query text is NEVER sent to Firebase Analytics.
-// In Firestore, raw query text is omitted by default and replaced with non-PII metadata (length, hash, word count).
-// Setting NEXT_PUBLIC_STORE_RAW_QUERY_TEXT='true' enables raw text collection strictly for designated research environments.
-export const STORE_RAW_QUERY_TEXT =
-  process.env.NEXT_PUBLIC_STORE_RAW_QUERY_TEXT === 'true';
+// Research Data Configuration:
+// Raw user dilemma queries, agent responses, and interaction texts are collected directly into Firestore for qualitative research analysis.
+export const STORE_RAW_QUERY_TEXT = true;
 
 const ANON_DEVICE_KEY = 'philo_research_anon_device_id';
 
@@ -244,15 +241,11 @@ export function logAppEvent(eventType: AppEventType, data: LogEventParams = {}):
             createdAt: Date.now(),
           };
 
-          // Copy metadata while respecting raw text privacy constraint
+          // Store all research telemetry data and raw texts in Firestore
           for (const [k, v] of Object.entries(data)) {
             if (k === 'sessionId' || k === 'userId' || k === 'isAnonymous') continue;
 
-            if (k === 'raw_query_text') {
-              if (STORE_RAW_QUERY_TEXT) {
-                firestoreDoc.raw_query_text = v;
-              }
-            } else if (v !== undefined) {
+            if (v !== undefined) {
               firestoreDoc[k] = v;
             }
           }

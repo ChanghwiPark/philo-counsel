@@ -671,6 +671,7 @@ export default function PhilosophicalCounselingPage() {
         userId: getEffectiveUserId(),
         nudge_type: 'consecutive_turns_checkin',
         consecutive_turns: DIALOGUE_CONFIG.CHECKIN_CONSECUTIVE_AGENT_TURNS,
+        raw_checkin_question: checkinLine,
       });
     },
     [clearIdleTimer, customApiKey, pausableWait, persistSession]
@@ -854,6 +855,12 @@ export default function PhilosophicalCounselingPage() {
                 ? 'idle_debate'
                 : 'idle_nudge'
               : 'council_response',
+          raw_response_text: item.content,
+          citation_source: item.citationSource || null,
+          citation_quote: item.citationQuote || null,
+          react_thought: item.reactThought || null,
+          action_scenario: item.actionScenario || null,
+          is_probing_question: Boolean(item.isProbingQuestion),
         });
 
         // 7. Increment consecutive agent turns count
@@ -1134,7 +1141,8 @@ export default function PhilosophicalCounselingPage() {
       query_hash: hashString(text),
       message_index: nextMessages.length,
       has_active_council: Boolean(currentCouncilRef.current),
-      ...(STORE_RAW_QUERY_TEXT ? { raw_query_text: text } : {}),
+      raw_query_text: text,
+      preferred_agent: currentReplyTarget?.targetAgentId || null,
     });
 
     const updatedHistory: ConversationTurnHistory[] = [
@@ -1273,6 +1281,7 @@ export default function PhilosophicalCounselingPage() {
       action: res.isLiked ? 'like' : 'unlike',
       response_length: msg.content.length,
       total_likes_in_session: res.reactions.length,
+      raw_liked_text: msg.content,
     });
 
     // Update messages state
