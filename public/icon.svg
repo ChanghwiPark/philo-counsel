@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <!-- Background gradient matching AgentHeader logo (from-indigo-600 via-indigo-700 to-purple-700) -->
+    <linearGradient id="headerGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4f46e5"/>
+      <stop offset="50%" stop-color="#4338ca"/>
+      <stop offset="100%" stop-color="#7e22ce"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Outer squircle container with brand gradient -->
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#headerGrad)"/>
+
+  <!-- Inner white rounded surface matching AgentHeader -->
+  <rect x="5.5" y="5.5" width="53" height="53" rx="13" fill="#ffffff"/>
+
+  <!-- 4 Pillars Agora Temple Logo in #4f46e5 -->
+  <g transform="translate(10.4, 11.3) scale(1.8)" fill="none" stroke="#4f46e5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 20h18" />
+    <path d="M4 17h16" />
+    <path d="M6 17V8" />
+    <path d="M10 17V8" />
+    <path d="M14 17V8" />
+    <path d="M18 17V8" />
+    <path d="M2 7l10-4 10 4" />
+  </g>
+</svg>

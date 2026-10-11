@@ -1,0 +1,35 @@
+# Dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# Next.js build output
+/.next/
+/out/
+/build
+
+# TypeScript
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+
+# Firebase & Deployment artifacts
+.firebase
+*.log
+
+# Sensitive Environment Variables (CRITICAL)
+.env
+.env*.local
+.env.philo-counsel
+.env.production
+.env.local
+
+# OS & Editor
+.DS_Store
+*.pem
+.vscode/
+.idea/
+
+# Scratch & local QA scripts
+scratch/
+events_export*
+*.pdf
