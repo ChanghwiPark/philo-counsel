@@ -17,7 +17,12 @@
 ## 🌟 Why PhiloCounsel?
 
 ### The Problem
-When people face real-life dilemmas—in workplace ethics, relationships, family obligations, or personal integrity—engaging with unfamiliar philosophical traditions is difficult. Primary texts are dense and scattered, formal ethics education is scarce, and self-guided exploration tends to stall at one's initial intuition. 
+When facing difficult choices in everyday life—such as relationship conflicts, workplace dilemmas, or moral trade-offs—most people get stuck in their own biases and gut feelings.
+
+While centuries of philosophical thought offer profound wisdom for resolving such dilemmas, applying them in practice is difficult:
+* **Too Abstract & Inaccessible**: Classical philosophical writings are dense, academic, and hard to translate into day-to-day decisions.
+* **Cognitive Echo Chambers**: When wrestling with tough dilemmas alone, people tend to reinforce their initial intuitions rather than exploring alternative viewpoints.
+* **Lack of Diverse Guidance**: Real-world dilemmas rarely have a single "correct" answer, yet people rarely have access to mentors who can challenge their assumptions from multiple, competing ethical traditions.
 
 ### Why Not Standard Chatbots?
 Standard LLMs (like single-turn ChatGPT) fall short on value-laden topics:
