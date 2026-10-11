@@ -59,6 +59,8 @@ const format = (getArg('format', 'json')).toLowerCase();
 const limitCount = parseInt(getArg('limit', '500'), 10);
 const eventType = getArg('type', null);
 const outPathArg = getArg('out', null);
+const excludeAdmin = getArg('excludeAdmin', 'true') !== 'false';
+const EXCLUDED_USER_IDS = ['uDnzScPtCATn3uBQpUhjC5Ct1eM2']; // Changhwi Park (Author/Admin)
 
 async function main() {
   console.log(`[Philo Telemetry Export] Connecting to project: ${firebaseConfig.projectId}...`);
@@ -78,7 +80,14 @@ async function main() {
     ...d.data(),
   }));
 
-  console.log(`[Philo Telemetry Export] Retrieved ${rows.length} event records.`);
+  console.log(`[Philo Telemetry Export] Retrieved ${rows.length} total event records from Firestore.`);
+
+  let exportRows = rows;
+  if (excludeAdmin) {
+    const beforeCount = exportRows.length;
+    exportRows = exportRows.filter((r) => !EXCLUDED_USER_IDS.includes(r.userId));
+    console.log(`[Philo Telemetry Export] Filtered out ${beforeCount - exportRows.length} admin/developer test events (userId: ${EXCLUDED_USER_IDS.join(', ')}). Valid research participant records: ${exportRows.length}`);
+  }
 
   let outputContent = '';
   const timestampStr = new Date().toISOString().slice(0, 10);
@@ -86,12 +95,12 @@ async function main() {
   const outPath = outPathArg ? path.resolve(process.cwd(), outPathArg) : path.join(rootDir, defaultFileName);
 
   if (format === 'csv') {
-    if (rows.length === 0) {
+    if (exportRows.length === 0) {
       outputContent = 'id,eventType,sessionId,userId,timestamp\n';
     } else {
-      const headers = Array.from(new Set(rows.flatMap((r) => Object.keys(r))));
+      const headers = Array.from(new Set(exportRows.flatMap((r) => Object.keys(r))));
       const lines = [headers.join(',')];
-      for (const row of rows) {
+      for (const row of exportRows) {
         const values = headers.map((h) => {
           const val = row[h];
           if (val === undefined || val === null) return '""';
@@ -103,7 +112,7 @@ async function main() {
       outputContent = lines.join('\n');
     }
   } else {
-    outputContent = JSON.stringify(rows, null, 2);
+    outputContent = JSON.stringify(exportRows, null, 2);
   }
 
   fs.writeFileSync(outPath, outputContent, 'utf8');
@@ -111,10 +120,10 @@ async function main() {
 
   // Event type breakdown
   const breakdown = {};
-  for (const r of rows) {
+  for (const r of exportRows) {
     breakdown[r.eventType] = (breakdown[r.eventType] || 0) + 1;
   }
-  console.log('[Philo Telemetry Export] Event Breakdown:', breakdown);
+  console.log('[Philo Telemetry Export] Event Breakdown (Valid Participants):', breakdown);
 }
 
 main().catch((err) => {

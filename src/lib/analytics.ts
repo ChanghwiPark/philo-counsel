@@ -2,7 +2,7 @@
 
 import { collection, addDoc, getDocs, query, orderBy, limit, where } from 'firebase/firestore';
 import { logEvent } from 'firebase/analytics';
-import { getFirebaseDb, getFirebaseAnalytics } from './firebase';
+import { getFirebaseDb, getFirebaseAnalytics, getFirebaseAuth } from './firebase';
 
 export type AppEventType =
   | 'session_start'
@@ -11,6 +11,76 @@ export type AppEventType =
   | 'like_clicked'
   | 'idle_proactive_nudge'
   | 'session_end';
+
+// Telemetry Exclusion Configuration:
+// Author / Admin users are completely excluded from research analytics & telemetry to avoid data contamination.
+export const EXCLUDED_TELEMETRY_EMAILS = [
+  'changhwipark@kaist.ac.kr',
+];
+
+export const EXCLUDED_TELEMETRY_USER_IDS = [
+  'uDnzScPtCATn3uBQpUhjC5Ct1eM2', // Changhwi Park
+];
+
+const EXCLUDED_DEVICE_KEY = 'philo_research_excluded_device';
+
+/**
+ * Checks whether the current user or device is an author/admin who should be excluded from telemetry.
+ */
+export function isTelemetryExcludedUser(explicitUserId?: string): boolean {
+  if (typeof window === 'undefined') return false;
+
+  // 1. Check explicit userId
+  if (explicitUserId && EXCLUDED_TELEMETRY_USER_IDS.includes(explicitUserId)) {
+    return true;
+  }
+
+  try {
+    // 2. Check localStorage cached profile
+    const rawUser = localStorage.getItem('phil_counseling_current_user');
+    if (rawUser) {
+      const parsed = JSON.parse(rawUser);
+      if (parsed?.id && EXCLUDED_TELEMETRY_USER_IDS.includes(parsed.id)) {
+        return true;
+      }
+      const email = parsed?.email?.toLowerCase()?.trim();
+      if (email) {
+        if (EXCLUDED_TELEMETRY_EMAILS.includes(email)) {
+          localStorage.setItem(EXCLUDED_DEVICE_KEY, 'true');
+          return true;
+        } else {
+          localStorage.removeItem(EXCLUDED_DEVICE_KEY);
+        }
+      }
+    }
+
+    // 3. Check live Firebase Auth user
+    const auth = getFirebaseAuth();
+    if (auth?.currentUser) {
+      if (auth.currentUser.uid && EXCLUDED_TELEMETRY_USER_IDS.includes(auth.currentUser.uid)) {
+        return true;
+      }
+      const email = auth.currentUser.email?.toLowerCase()?.trim();
+      if (email) {
+        if (EXCLUDED_TELEMETRY_EMAILS.includes(email)) {
+          localStorage.setItem(EXCLUDED_DEVICE_KEY, 'true');
+          return true;
+        } else {
+          localStorage.removeItem(EXCLUDED_DEVICE_KEY);
+        }
+      }
+    }
+
+    // 4. Check persistent device exclusion marker
+    if (localStorage.getItem(EXCLUDED_DEVICE_KEY) === 'true') {
+      return true;
+    }
+  } catch {
+    // Graceful fallback
+  }
+
+  return false;
+}
 
 // Privacy Configuration:
 // Raw dilemma query text is NEVER sent to Firebase Analytics.
@@ -116,6 +186,14 @@ export interface LogEventParams {
 export function logAppEvent(eventType: AppEventType, data: LogEventParams = {}): void {
   if (typeof window === 'undefined') return;
 
+  const targetUserId = data.userId;
+  if (isTelemetryExcludedUser(targetUserId)) {
+    if (process.env.NODE_ENV === 'development') {
+      console.debug(`[Analytics Excluded] Telemetry event '${eventType}' bypassed for author.`);
+    }
+    return;
+  }
+
   // Execute asynchronously in background microtask without blocking UX
   Promise.resolve().then(async () => {
     try {
@@ -199,13 +277,13 @@ export function logAppEvent(eventType: AppEventType, data: LogEventParams = {}):
  */
 export async function exportFirestoreEvents(
   format: 'json' | 'csv' = 'json',
-  options: { limitCount?: number; eventType?: string } = {}
+  options: { limitCount?: number; eventType?: string; excludeAdmin?: boolean } = {}
 ): Promise<string> {
   if (typeof window === 'undefined') return '';
   const db = getFirebaseDb();
   if (!db) throw new Error('Firestore is not available');
 
-  const { limitCount = 500, eventType } = options;
+  const { limitCount = 500, eventType, excludeAdmin = true } = options;
   const eventsCol = collection(db, 'events');
   let q = query(eventsCol, orderBy('createdAt', 'desc'), limit(limitCount));
   if (eventType) {
@@ -213,10 +291,14 @@ export async function exportFirestoreEvents(
   }
 
   const snapshot = await getDocs(q);
-  const rows = snapshot.docs.map((d) => ({
+  let rows = snapshot.docs.map((d) => ({
     id: d.id,
     ...d.data(),
   }));
+
+  if (excludeAdmin) {
+    rows = rows.filter((r: any) => !EXCLUDED_TELEMETRY_USER_IDS.includes(r.userId));
+  }
 
   if (format === 'json') {
     return JSON.stringify(rows, null, 2);
@@ -244,11 +326,12 @@ export async function exportFirestoreEvents(
 if (typeof window !== 'undefined') {
   (window as any).__exportPhiloEvents = async (
     format: 'json' | 'csv' = 'json',
-    limitCount: number = 500
+    limitCount: number = 500,
+    excludeAdmin: boolean = true
   ) => {
-    console.info(`[Philo Analytics] Exporting last ${limitCount} events as ${format.toUpperCase()}...`);
+    console.info(`[Philo Analytics] Exporting last ${limitCount} events as ${format.toUpperCase()} (excludeAdmin: ${excludeAdmin})...`);
     try {
-      const result = await exportFirestoreEvents(format, { limitCount });
+      const result = await exportFirestoreEvents(format, { limitCount, excludeAdmin });
       console.info(`[Philo Analytics] Export complete (${result.length} bytes).`);
 
       const blob = new Blob([result], {
