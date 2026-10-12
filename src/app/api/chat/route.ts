@@ -22,6 +22,53 @@ import { selectCouncilForDilemma } from '@/lib/councilSelector';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
+const CANONICAL_URL_MAP: Record<string, { url: string; title: string }> = {
+  buddhist: {
+    url: 'https://encykorea.aks.ac.kr/Article/E0078329',
+    title: '한국민족문화대백과사전 - 불교 철학',
+  },
+  rationalist: {
+    url: 'https://plato.stanford.edu/entries/kant-moral/',
+    title: "Stanford Encyclopedia of Philosophy - Kant's Moral Philosophy",
+  },
+  confucian: {
+    url: 'https://encykorea.aks.ac.kr/Article/E0013063',
+    title: '한국민족문화대백과사전 - 유교 윤리와 도리',
+  },
+  utilitarian: {
+    url: 'https://plato.stanford.edu/entries/utilitarianism-history/',
+    title: 'Stanford Encyclopedia of Philosophy - History of Utilitarianism',
+  },
+  christian: {
+    url: 'https://plato.stanford.edu/entries/augustine/',
+    title: 'Stanford Encyclopedia of Philosophy - Saint Augustine',
+  },
+  daoist: {
+    url: 'https://plato.stanford.edu/entries/daoism/',
+    title: 'Stanford Encyclopedia of Philosophy - Daoism',
+  },
+  existentialist: {
+    url: 'https://plato.stanford.edu/entries/existentialism/',
+    title: 'Stanford Encyclopedia of Philosophy - Existentialism',
+  },
+  liberal: {
+    url: 'https://plato.stanford.edu/entries/liberalism/',
+    title: 'Stanford Encyclopedia of Philosophy - Liberalism',
+  },
+  marxist: {
+    url: 'https://plato.stanford.edu/entries/marx/',
+    title: 'Stanford Encyclopedia of Philosophy - Karl Marx',
+  },
+  hindu: {
+    url: 'https://plato.stanford.edu/entries/hindu-philosophy/',
+    title: 'Stanford Encyclopedia of Philosophy - Hindu Philosophy',
+  },
+  islamic: {
+    url: 'https://plato.stanford.edu/entries/arabic-islamic-religion/',
+    title: 'Stanford Encyclopedia of Philosophy - Arabic and Islamic Philosophy',
+  },
+};
+
 interface HistoryTurn {
   role: 'user' | 'assistant';
   content: string;
@@ -63,11 +110,8 @@ export async function POST(req: NextRequest) {
     if (action === 'generate_dilemma') {
       try {
         const dilemmaPrompt = `당신은 인간 삶의 첨예한 도덕적 갈등과 가치관 딜레마를 발굴하는 철학적 질문 생성기입니다.
-다음 4대 핵심 사상가(불교, 칸트 의무론, 유교, 공리주의)가 각자의 독창적인 관점에서 치열하게 논쟁할 수 있는 현실적이고 생생한 딜레마 질문 1개와, 사용자가 직관적으로 선택할 수 있는 상반된 구체적 행동 입장 2개를 생성하세요:
-- 불교 사상: 연기(緣起)와 공(空), 집착 내려놓기와 자비
-- 칸트 윤리학: 보편적 도덕법칙, 정언명령과 의무론
-- 유교 사상: 인(仁)과 예(禮), 효(孝)와 가족/공동체의 도리
-- 공리주의: 최대 다수의 최대 행복, 결과의 실질적 유용성 계산
+다음 11대 주요 철학 전통(불교, 유교, 공리주의, 칸트 의무론, 기독교 윤리, 힌두 철학, 이슬람 윤리, 자유주의, 마르크스주의, 노장 도가, 실존주의) 중에서 서로 다른 가치관이 치열하게 맞부딪칠 수 있는 현실적이고 생생한 딜레마 질문 1개와, 사용자가 직관적으로 선택할 수 있는 상반된 구체적 행동 입장 2개를 생성하세요.
+- 인간관계(사랑, 우정, 의리), 직장/커리어(꿈 vs 가족의 기대, 이직, 승진, 퇴사), 공정과 규칙(내부고발, 양심 vs 조직), 경제/자본(돈, 불평등, 노동), 실존과 번아웃(불안, 삶의 의미, 평정) 등 다양한 주제를 폭넓게 다루세요.
 
 [필수 조건]
 - 인간관계, 사랑/연애, 직장/커리어, 가족, 우정, 공정성, 양심 등 현대인이 일상에서 마주칠 법한 구체적인 딜레마여야 합니다.
@@ -659,41 +703,6 @@ function enrichDebateMessages(
   reactCards: AgentReActCard[] = [],
   turnMode?: TurnMode
 ): ScriptedChatMessage[] {
-  const CANONICAL_URL_MAP: Record<string, { url: string; title: string }> = {
-    buddhist: {
-      url: 'https://encykorea.aks.ac.kr/Article/E0078329',
-      title: '한국민족문화대백과사전 - 불교 철학',
-    },
-    rationalist: {
-      url: 'https://plato.stanford.edu/entries/kant-moral/',
-      title: "Stanford Encyclopedia of Philosophy - Kant's Moral Philosophy",
-    },
-    confucian: {
-      url: 'https://encykorea.aks.ac.kr/Article/E0013063',
-      title: '한국민족문화대백과사전 - 유교 윤리와 도리',
-    },
-    utilitarian: {
-      url: 'https://plato.stanford.edu/entries/utilitarianism-history/',
-      title: 'Stanford Encyclopedia of Philosophy - History of Utilitarianism',
-    },
-    christian: {
-      url: 'https://plato.stanford.edu/entries/augustine/',
-      title: 'Stanford Encyclopedia of Philosophy - Saint Augustine',
-    },
-    daoist: {
-      url: 'https://plato.stanford.edu/entries/daoism/',
-      title: 'Stanford Encyclopedia of Philosophy - Daoism',
-    },
-    existentialist: {
-      url: 'https://plato.stanford.edu/entries/existentialism/',
-      title: 'Stanford Encyclopedia of Philosophy - Existentialism',
-    },
-    liberal: {
-      url: 'https://plato.stanford.edu/entries/liberalism/',
-      title: 'Stanford Encyclopedia of Philosophy - Liberalism',
-    },
-  };
-
   const cardMap = new Map<string, AgentReActCard>();
   for (const card of reactCards) {
     cardMap.set(card.agentId, card);
@@ -928,26 +937,6 @@ function parseAgentResponses(
   // 3. Extract [발언 1] / [메시지 1] and [발언 2] / [메시지 2]
   const sp1 = text.match(/\[(?:발언\s*1|메시지\s*1)\]([\s\S]*?)(?=\[(?:발언\s*2|메시지\s*2)|$)/i);
   const sp2 = text.match(/\[(?:발언\s*2|메시지\s*2)\]([\s\S]*)/i);
-
-  // Canonical authentic academic source fallback if web search didn't yield a direct link
-  const CANONICAL_URL_MAP: Record<string, { url: string; title: string }> = {
-    buddhist: {
-      url: 'https://encykorea.aks.ac.kr/Article/E0078329',
-      title: '한국민족문화대백과사전 - 불교 철학',
-    },
-    rationalist: {
-      url: 'https://plato.stanford.edu/entries/kant-moral/',
-      title: "Stanford Encyclopedia of Philosophy - Kant's Moral Philosophy",
-    },
-    confucian: {
-      url: 'https://encykorea.aks.ac.kr/Article/E0013063',
-      title: '한국민족문화대백과사전 - 유교 윤리와 도리',
-    },
-    utilitarian: {
-      url: 'https://plato.stanford.edu/entries/utilitarianism-history/',
-      title: 'Stanford Encyclopedia of Philosophy - History of Utilitarianism',
-    },
-  };
 
   const results: ScriptedChatMessage[] = [];
 

@@ -13,15 +13,15 @@ interface DilemmaThemeConfig {
 const DILEMMA_THEMES: DilemmaThemeConfig[] = [
   {
     theme: '인간관계와 감정적 경계',
-    keywords: ['이성 친구', '연인', '바람', '친구', '우정', '짝사랑', '헤어', '이별', '위로', '질투', '감정'],
-    primaryAgents: ['christian', 'rationalist', 'confucian'],
+    keywords: ['이성 친구', '연인', '바람', '친구', '우정', '짝사랑', '헤어', '이별', '위로', '질투', '감정', '애인', '남친', '여친', '배신', '서운', '외로움', '거리', '호감'],
+    primaryAgents: ['christian', 'confucian', 'rationalist'],
     defaultBlindSpotAgent: 'existentialist',
     defaultBlindSpotReason:
       '타인의 시선이나 관계의 눈치에 얽매여 ‘나 자신의 진정한 실존적 결단과 책임’을 회피하는 자기기만(Bad Faith)에 빠지기 쉽습니다.',
   },
   {
     theme: '공정과 원칙 vs 신의와 의리',
-    keywords: ['비리', '부정', '승진', '덮어', '고발', '침묵', '규정', '원칙', '거짓말', '진실', '손해', '피해', '팀'],
+    keywords: ['비리', '부정', '승진', '덮어', '고발', '침묵', '규정', '원칙', '거짓말', '진실', '손해', '피해', '팀', '동료', '내부고발', '양심', '정직', '폭로'],
     primaryAgents: ['rationalist', 'utilitarian', 'confucian'],
     defaultBlindSpotAgent: 'daoist',
     defaultBlindSpotReason:
@@ -29,7 +29,7 @@ const DILEMMA_THEMES: DilemmaThemeConfig[] = [
   },
   {
     theme: '가족의 도리 vs 자아실현과 꿈',
-    keywords: ['부모', '효도', '가족', '유학', '대학원', '창업', '진로', '꿈', '퇴사', '직장', '안정', '독립', '생계'],
+    keywords: ['부모', '효도', '가족', '유학', '대학원', '창업', '진로', '꿈', '퇴사', '직장', '안정', '독립', '생계', '이직', '적성', '커리어', '결혼', '자식'],
     primaryAgents: ['confucian', 'existentialist', 'liberal'],
     defaultBlindSpotAgent: 'daoist',
     defaultBlindSpotReason:
@@ -37,7 +37,7 @@ const DILEMMA_THEMES: DilemmaThemeConfig[] = [
   },
   {
     theme: '정직과 배려의 갈등',
-    keywords: ['피드백', '평가', '상처', '솔직', '선의의 거짓말', '조언', '지적', '실수', '용기'],
+    keywords: ['피드백', '평가', '상처', '솔직', '선의의 거짓말', '조언', '지적', '실수', '용기', '충고', '비판', '팩트'],
     primaryAgents: ['rationalist', 'christian', 'buddhist'],
     defaultBlindSpotAgent: 'existentialist',
     defaultBlindSpotReason:
@@ -45,19 +45,35 @@ const DILEMMA_THEMES: DilemmaThemeConfig[] = [
   },
   {
     theme: '물질적 조건과 사회적 불평등',
-    keywords: ['돈', '월급', '부자', '가난', '착취', '노동', '불평등', '자본', '계약', '재산', '공정', '경쟁'],
+    keywords: ['돈', '월급', '부자', '가난', '착취', '노동', '불평등', '자본', '계약', '재산', '공정', '경쟁', '연봉', '빈부', '자본주의', '투자', '주식', '빚', '경제', '보상'],
     primaryAgents: ['marxist', 'liberal', 'utilitarian'],
     defaultBlindSpotAgent: 'hindu',
     defaultBlindSpotReason:
       '눈앞의 경제적 이해관계와 권리 다툼에만 몰두하다 보면, 우주적 인과의 법칙(업)과 더 깊은 영혼의 도덕적 의무를 성찰하는 시각을 간과하기 쉽습니다.',
   },
   {
+    theme: '내면의 평정과 실존적 불안',
+    keywords: ['불안', '번아웃', '우울', '무기력', '허무', '의미', '스트레스', '자책', '후회', '평온', '멘탈', '휴식', '마음', '명상', '지침', '괴로움', '공허', '방황'],
+    primaryAgents: ['buddhist', 'existentialist', 'daoist'],
+    defaultBlindSpotAgent: 'utilitarian',
+    defaultBlindSpotReason:
+      '내면의 평화와 실존적 번민에만 침잠하다 보면, 구체적 현실에서 삶의 조건을 개선하고 실질적인 삶의 효용을 만들어가는 적극적 행동을 놓치기 쉽습니다.',
+  },
+  {
     theme: '절대적 신념과 영적 평화',
-    keywords: ['신앙', '종교', '기도', '신', '운명', '죄', '구원', '내세', '알라', '하느님', '하나님', '업보', '해탈'],
+    keywords: ['신앙', '종교', '기도', '신', '운명', '죄', '구원', '내세', '알라', '하느님', '하나님', '업보', '해탈', '사후', '영혼', '성경', '불경'],
     primaryAgents: ['christian', 'islamic', 'hindu'],
     defaultBlindSpotAgent: 'rationalist',
     defaultBlindSpotReason:
       '종교적 신념이나 운명론에만 의탁하다 보면, 명확하게 증명된 사실과 냉철한 이성적 논증의 잣대를 놓치기 쉽습니다.',
+  },
+  {
+    theme: '정의와 법 vs 자비와 관용',
+    keywords: ['처벌', '용서', '범죄', '단죄', '복수', '엄벌', '관용', '선처', '참회', '가해자', '피해자', '재판', '법', '정의', '잘못'],
+    primaryAgents: ['islamic', 'rationalist', 'christian'],
+    defaultBlindSpotAgent: 'buddhist',
+    defaultBlindSpotReason:
+      '처벌과 단죄의 잣대에만 얽매이다 보면, 모든 존재의 상호연결성과 고통의 근원을 연민으로 품어내는 자비의 관점을 잊기 쉽습니다.',
   },
 ];
 
@@ -165,27 +181,7 @@ export function selectCouncilForDilemma(
       },
     };
 
-    // Pairings within the 4 core traditions: buddhist, rationalist (Kantian), confucian, utilitarian
-    const coreBlindSpotMap: Record<string, { challengerId: AgentId; reason: string }> = {
-      buddhist: {
-        challengerId: 'confucian',
-        reason: '마음의 집착을 비우고 홀로 평온에 머물다 보면, 눈앞의 소중한 인간관계와 가족·공동체의 구체적 도리(禮)를 실천하는 책임을 소홀히 하기 쉽습니다.',
-      },
-      rationalist: {
-        challengerId: 'utilitarian',
-        reason: '엄격한 원칙과 의무론의 잣대만을 앞세우다 보면, 구체적 현실에서 구성원들이 겪는 실질적 고통과 최대 다수의 행복을 유연하게 배려하지 못하기 쉽습니다.',
-      },
-      confucian: {
-        challengerId: 'rationalist',
-        reason: '가족과 인간관계의 인정(情)이나 관습에 치우치다 보면, 감정에 흔들리지 않고 보편타당하게 적용되어야 할 냉철한 도덕법칙을 놓치기 쉽습니다.',
-      },
-      utilitarian: {
-        challengerId: 'rationalist',
-        reason: '계산과 결과의 유용성에만 집중하다 보면, 어떤 상황에서도 양보할 수 없는 ‘인간 존엄성과 보편적 도덕법칙의 절대성’을 간과하기 쉽습니다.',
-      },
-    };
-
-    const paired = coreBlindSpotMap[dominantAgentId] || {
+    const paired = blindSpotMap[dominantAgentId] || {
       challengerId: 'rationalist',
       reason: '당장의 상황 판단이나 감정에 휩쓸리기 쉬운 상황에서, 냉철한 보편적 도덕법칙을 성찰하는 시각이 필요합니다.',
     };
@@ -194,19 +190,62 @@ export function selectCouncilForDilemma(
     blindSpotInsightText = `상담자님께서 선호하시는 [${dominantMeta.name}] 관점(${dominantMeta.stance})의 편향을 보완하고자, ${paired.reason} 이에 따라 [${getAgentMeta(paired.challengerId).name}]을 사각지대 보완 사상가로 지정했습니다.`;
   } else {
     // Guest or no likes yet -> infer from dilemma theme
-    const defaultChallengerId: AgentId = normalized.includes('효') || normalized.includes('부모') || normalized.includes('가족')
-      ? 'rationalist'
-      : normalized.includes('이익') || normalized.includes('결과') || normalized.includes('돈')
-      ? 'buddhist'
-      : 'utilitarian';
-
+    const defaultChallengerId: AgentId = matchedTheme.defaultBlindSpotAgent;
     blindSpotAgentIds.push(defaultChallengerId);
     const challengerMeta = getAgentMeta(defaultChallengerId);
-    blindSpotInsightText = `본 고민은 ${matchedTheme.theme}에 관한 문제로, 당장의 감정이나 손익 계산에 갇히지 않도록 [${challengerMeta.name}]의 시각을 생각 사각지대 보완 관점으로 배정했습니다.`;
+    blindSpotInsightText = `본 고민은 '${matchedTheme.theme}'에 관한 문제로, ${matchedTheme.defaultBlindSpotReason} 이에 따라 [${challengerMeta.name}]의 시각을 생각 사각지대 보완 관점으로 소집했습니다.`;
   }
 
-  // 4. Exactly the 4 Core Traditions: Buddhist, Kant (Rationalist), Confucian, Utilitarian
-  const finalIds: AgentId[] = ['buddhist', 'rationalist', 'confucian', 'utilitarian'];
+  // 4. Assemble Exactly 4 Dynamic Thinkers from the 11 Traditions
+  const candidateIds: AgentId[] = [];
+
+  // If user has a favorite tradition, ensure it is convened
+  if (dominantAgentId) {
+    candidateIds.push(dominantAgentId);
+  }
+
+  // Include primary thinkers relevant to the dilemma theme
+  matchedTheme.primaryAgents.forEach((id) => {
+    if (!candidateIds.includes(id)) {
+      candidateIds.push(id);
+    }
+  });
+
+  // Include the blind spot challenger
+  blindSpotAgentIds.forEach((id) => {
+    if (!candidateIds.includes(id)) {
+      candidateIds.push(id);
+    }
+  });
+
+  // Fallback pool across all 11 traditions to ensure exactly 4 thinkers
+  const fallbackPool: AgentId[] = [
+    'buddhist',
+    'confucian',
+    'rationalist',
+    'utilitarian',
+    'existentialist',
+    'daoist',
+    'liberal',
+    'marxist',
+    'christian',
+    'hindu',
+    'islamic',
+  ];
+
+  fallbackPool.forEach((id) => {
+    if (candidateIds.length < 4 && !candidateIds.includes(id)) {
+      candidateIds.push(id);
+    }
+  });
+
+  let finalIds = candidateIds.slice(0, 4);
+
+  // Guarantee blind spot challenger presence in the 4 seats
+  const primaryChallengerId = blindSpotAgentIds[0];
+  if (primaryChallengerId && !finalIds.includes(primaryChallengerId)) {
+    finalIds[3] = primaryChallengerId;
+  }
 
   // Mark blind spot roles on the agent metadata
   const convenedAgents: AgentMeta[] = finalIds.map((id) => {
@@ -215,7 +254,7 @@ export function selectCouncilForDilemma(
     return {
       ...meta,
       blindSpotRole: isBlindSpot
-        ? `사각지대 보완: ${meta.summary}`
+        ? `사각지대 보완: ${meta.blindSpotRole || meta.summary}`
         : meta.blindSpotRole || meta.summary,
     };
   });
