@@ -54,18 +54,18 @@ export function UserProfileModal({
       />
 
       {/* Modal Dialog */}
-      <div className="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-200 z-10 flex flex-col max-h-[90vh]">
+      <div className="relative w-full max-w-2xl bg-white rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden border border-slate-200 z-10 flex flex-col max-h-[88dvh] sm:max-h-[90vh]">
         {/* Header Bar */}
-        <div className="p-4 sm:p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/70">
-          <div className="flex items-center gap-3 min-w-0">
-            <div className="w-9 h-9 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-700 flex items-center justify-center font-bold text-sm shrink-0 shadow-2xs">
+        <div className="p-3.5 sm:p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/70">
+          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-700 flex items-center justify-center font-bold text-xs sm:text-sm shrink-0 shadow-2xs">
               {currentUser ? currentUser.name.slice(0, 1) : '나'}
             </div>
             <div className="min-w-0">
-              <h2 className="font-bold text-slate-900 text-base sm:text-lg leading-tight truncate">
+              <h2 className="font-bold text-slate-900 text-sm sm:text-lg leading-tight truncate">
                 {currentUser ? `${currentUser.name}님의 철학 가치관` : '나의 철학 가치관 프로필'}
               </h2>
-              <p className="text-[11px] text-slate-400 mt-0.5 truncate">
+              <p className="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 truncate">
                 {currentUser ? currentUser.email : '사상가 조언 공감 기반 가치 체계 분석'}
               </p>
             </div>
@@ -82,10 +82,10 @@ export function UserProfileModal({
 
         {/* Tab Navigation (Only visible when user has at least 1 reaction) */}
         {hasReactions && (
-          <div className="flex border-b border-slate-100 px-5 bg-white text-xs font-semibold">
+          <div className="flex border-b border-slate-100 px-3 sm:px-5 bg-white text-xs font-semibold">
             <button
               onClick={() => setActiveTab('analysis')}
-              className={`py-3 px-3 border-b-2 flex items-center gap-1.5 transition-colors cursor-pointer ${
+              className={`py-2.5 sm:py-3 px-2 sm:px-3 border-b-2 flex items-center gap-1.5 transition-colors cursor-pointer text-xs ${
                 activeTab === 'analysis'
                   ? 'border-indigo-600 text-indigo-600'
                   : 'border-transparent text-slate-400 hover:text-slate-600'
@@ -96,14 +96,14 @@ export function UserProfileModal({
             </button>
             <button
               onClick={() => setActiveTab('bookmarks')}
-              className={`py-3 px-3 border-b-2 flex items-center gap-1.5 transition-colors cursor-pointer ${
+              className={`py-2.5 sm:py-3 px-2 sm:px-3 border-b-2 flex items-center gap-1.5 transition-colors cursor-pointer text-xs ${
                 activeTab === 'bookmarks'
                   ? 'border-indigo-600 text-indigo-600'
                   : 'border-transparent text-slate-400 hover:text-slate-600'
               }`}
             >
               <ThumbsUp size={14} />
-              <span>공감한 조언 모음</span>
+              <span>공감한 조언</span>
               <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-amber-100 text-amber-800">
                 {reactions.length}
               </span>
@@ -112,7 +112,7 @@ export function UserProfileModal({
         )}
 
         {/* Content Body */}
-        <div className="flex-1 overflow-y-auto p-5 sm:p-6">
+        <div className="flex-1 overflow-y-auto p-3.5 sm:p-6">
           {!hasReactions ? (
             /* Simple, Minimal Guide Text when 0 likes exist */
             <div className="py-12 sm:py-16 px-4 flex flex-col items-center justify-center text-center space-y-4">

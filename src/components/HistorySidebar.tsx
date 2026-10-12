@@ -189,7 +189,7 @@ export function HistorySidebar({
         </div>
 
         {/* User Account Footer */}
-        <div className="p-3 border-t border-slate-100 bg-slate-50/80">
+        <div className="p-3 border-t border-slate-100 bg-slate-50/80 pb-safe">
           {currentUser ? (
             <div className="flex items-center justify-between p-2 rounded-xl bg-white border border-slate-200 shadow-2xs">
               <div className="flex items-center gap-2 min-w-0">

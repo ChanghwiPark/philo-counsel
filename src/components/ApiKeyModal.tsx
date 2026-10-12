@@ -69,7 +69,7 @@ export function ApiKeyModal({
             value={inputKey}
             onChange={(e) => setInputKey(e.target.value)}
             placeholder="sk-..."
-            className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 font-mono"
+            className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 font-mono"
           />
           <p className="text-[11px] text-slate-400">
             입력하신 키는 브라우저 로컬 저장소에만 보관되며 상담 API 요청 시에만 사용됩니다.

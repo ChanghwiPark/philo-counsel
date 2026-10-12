@@ -96,8 +96,8 @@ export function CouncilBanner({ council }: CouncilBannerProps) {
       {isExpanded && (
         <div className="animate-fade-in border-t border-slate-100">
           {/* Convened Agents Chips Row */}
-          <div className="p-3 sm:p-4 bg-slate-50/50 border-b border-slate-100">
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2.5">
+          <div className="p-2.5 sm:p-4 bg-slate-50/50 border-b border-slate-100">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 sm:gap-2.5">
               {council.agents.map((agent) => {
                 const isBlindSpot = council.blindSpotAgentIds.includes(agent.id);
                 const isSelected = selectedAgent?.id === agent.id;
@@ -107,7 +107,7 @@ export function CouncilBanner({ council }: CouncilBannerProps) {
                     key={agent.id}
                     type="button"
                     onClick={() => setSelectedAgent(isSelected ? null : agent)}
-                    className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer flex flex-col justify-between relative group ${
+                    className={`p-2 sm:p-2.5 rounded-xl border text-left transition-all cursor-pointer flex flex-col justify-between relative group ${
                       isSelected
                         ? 'bg-white border-indigo-400 ring-2 ring-indigo-100 shadow-xs'
                         : isBlindSpot
@@ -117,29 +117,29 @@ export function CouncilBanner({ council }: CouncilBannerProps) {
                   >
                     {/* Blind spot badge */}
                     {isBlindSpot && (
-                      <span className="absolute -top-1.5 right-2 px-1.5 py-0.2 rounded-full bg-amber-500 text-white text-[9px] font-bold shadow-2xs flex items-center gap-0.5">
+                      <span className="absolute -top-1.5 right-1.5 px-1 sm:px-1.5 py-0.2 rounded-full bg-amber-500 text-white text-[8.5px] sm:text-[9px] font-bold shadow-2xs flex items-center gap-0.5">
                         <Sparkles size={8} />
                         <span>사각지대 보완</span>
                       </span>
                     )}
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1.5 sm:gap-2">
                       <div
-                        className={`w-7 h-7 rounded-lg ${agent.avatarBg} border flex items-center justify-center text-sm shrink-0 shadow-2xs`}
+                        className={`w-6 h-6 sm:w-7 sm:h-7 rounded-lg ${agent.avatarBg} border flex items-center justify-center text-xs sm:text-sm shrink-0 shadow-2xs`}
                       >
                         {agent.icon}
                       </div>
                       <div className="min-w-0 flex-1">
-                        <div className="font-bold text-slate-900 text-xs truncate">
+                        <div className="font-bold text-slate-900 text-[11.5px] sm:text-xs truncate">
                           {agent.name}
                         </div>
-                        <div className="text-[10px] text-slate-500 truncate font-medium">
+                        <div className="text-[9.5px] sm:text-[10px] text-slate-500 truncate font-medium">
                           {agent.stance}
                         </div>
                       </div>
                     </div>
 
-                    <div className="mt-1.5 pt-1.5 border-t border-slate-100 text-[10px] text-slate-400 truncate flex items-center gap-1">
+                    <div className="mt-1.5 pt-1.5 border-t border-slate-100 text-[9.5px] sm:text-[10px] text-slate-400 truncate flex items-center gap-1">
                       <BookOpen size={10} className="shrink-0 text-slate-400" />
                       <span className="truncate">{agent.keyWork}</span>
                     </div>

@@ -182,18 +182,18 @@ export function MessageItem({
   // 1. User Message (Right-aligned, 24px horizontal padding)
   if (message.sender === 'user') {
     return (
-      <div className="flex justify-end items-end gap-2.5 animate-fade-in group">
+      <div className="flex justify-end items-end gap-1.5 sm:gap-2.5 animate-fade-in group">
         <span className="text-[10px] text-slate-400 shrink-0 mb-1 select-none">
           {message.timestamp}
         </span>
-        <div className="flex flex-col items-end max-w-[85%] sm:max-w-[75%]">
+        <div className="flex flex-col items-end max-w-[88%] sm:max-w-[75%]">
           {/* If this user message was sent in reply to a specific agent or message */}
           {message.replyTargetAgentName && (
-            <div className="mb-1.5 mr-1">
+            <div className="mb-1.5 mr-1 max-w-full">
               <button
                 type="button"
                 onClick={() => message.replyTargetMessageId && onNavigateToMessage?.(message.replyTargetMessageId)}
-                className={`group/reply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl border text-[11.5px] font-medium transition-all text-left max-w-full ${message.replyTargetMessageId
+                className={`group/reply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl border text-[11px] sm:text-[11.5px] font-medium transition-all text-left max-w-full ${message.replyTargetMessageId
                     ? 'bg-slate-800/90 hover:bg-slate-800 border-slate-700/80 hover:border-indigo-400 text-slate-300 hover:text-white cursor-pointer shadow-2xs active:scale-[0.99]'
                     : 'bg-slate-800/70 border-slate-700 text-slate-400'
                   }`}
@@ -206,7 +206,7 @@ export function MessageItem({
                 {message.replyTargetSnippet && (
                   <>
                     <span className="text-slate-600 shrink-0">|</span>
-                    <span className="text-slate-400 group-hover/reply:text-slate-200 truncate text-[11px] font-normal">
+                    <span className="text-slate-400 group-hover/reply:text-slate-200 truncate text-[10.5px] sm:text-[11px] font-normal max-w-[140px] sm:max-w-[200px]">
                       "{message.replyTargetSnippet}"
                     </span>
                   </>
@@ -215,13 +215,7 @@ export function MessageItem({
             </div>
           )}
           <div
-            className="w-full bg-slate-900 text-white rounded-2xl rounded-br-xs shadow-xs"
-            style={{
-              paddingLeft: '24px',
-              paddingRight: '24px',
-              paddingTop: '13px',
-              paddingBottom: '13px',
-            }}
+            className="w-full bg-slate-900 text-white rounded-2xl rounded-br-xs shadow-xs px-3.5 py-2.5 sm:px-6 sm:py-3.5"
           >
             <p className="text-sm leading-relaxed whitespace-pre-wrap font-normal">
               {message.content}
@@ -336,21 +330,21 @@ export function MessageItem({
   };
 
   return (
-    <div className="flex justify-start items-start gap-3 sm:gap-4 animate-fade-in pb-1.5">
+    <div className="flex justify-start items-start gap-2 sm:gap-3.5 animate-fade-in pb-1.5">
       {/* Avatar */}
       {showAvatar ? (
         <div
-          className={`w-10 h-10 rounded-2xl ${meta.avatarBg} border flex items-center justify-center shrink-0 shadow-xs text-base sm:text-lg mt-0.5`}
+          className={`w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl ${meta.avatarBg} border flex items-center justify-center shrink-0 shadow-xs text-sm sm:text-lg mt-0.5`}
           title={meta.name}
         >
           {meta.icon || '📜'}
         </div>
       ) : (
-        <div className="w-10 shrink-0" />
+        <div className="w-8 sm:w-10 shrink-0" />
       )}
 
       {/* Bubble Container */}
-      <div className="flex-1 max-w-[94%] sm:max-w-[88%]">
+      <div className="flex-1 min-w-0 max-w-[96%] sm:max-w-[88%]">
         {/* Sender Name Header */}
         {showAvatar && (
           <div className="flex items-center gap-2 mb-1.5 pl-1">
@@ -364,7 +358,7 @@ export function MessageItem({
             <button
               type="button"
               onClick={() => replyTargetId && onNavigateToMessage?.(replyTargetId)}
-              className={`group/reply inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-medium transition-all text-left max-w-[96%] sm:max-w-[85%] ${replyTargetId
+              className={`group/reply inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl border text-[11px] sm:text-xs font-medium transition-all text-left max-w-[96%] sm:max-w-[85%] ${replyTargetId
                   ? 'bg-slate-100/95 hover:bg-indigo-50 border-slate-200/90 hover:border-indigo-300 text-slate-700 hover:text-indigo-900 cursor-pointer shadow-2xs hover:shadow-xs active:scale-[0.99]'
                   : 'bg-slate-100/90 border-slate-200 text-slate-600'
                 }`}
@@ -377,7 +371,7 @@ export function MessageItem({
               {replySnippet && (
                 <>
                   <span className="text-slate-300 group-hover/reply:text-indigo-200 shrink-0 select-none">|</span>
-                  <span className="text-slate-500 group-hover/reply:text-indigo-600 truncate text-[11.5px] font-normal">
+                  <span className="text-slate-500 group-hover/reply:text-indigo-600 truncate text-[10.5px] sm:text-[11.5px] font-normal max-w-[140px] sm:max-w-[240px]">
                     "{replySnippet}"
                   </span>
                 </>
@@ -387,20 +381,14 @@ export function MessageItem({
         )}
 
         {/* Chat Bubble & Timestamp row */}
-        <div className="flex items-end gap-2.5">
+        <div className="flex items-end gap-1.5 sm:gap-2.5">
           <div className="relative group/bubble max-w-full">
             {/* Main Bubble Card */}
             <div
-              className={`rounded-2xl rounded-tl-xs border min-w-[120px] transition-all duration-300 ${isCheckin
+              className={`rounded-2xl rounded-tl-xs border min-w-[100px] sm:min-w-[120px] transition-all duration-300 px-3.5 py-3 sm:px-6 sm:py-4 ${isCheckin
                   ? 'bg-gradient-to-br from-indigo-50/80 via-purple-50/30 to-white border-indigo-300 shadow-xs'
                   : `${meta.borderColor} bg-white shadow-xs`
                 }`}
-              style={{
-                paddingLeft: '28px',
-                paddingRight: '28px',
-                paddingTop: '16px',
-                paddingBottom: '16px',
-              }}
             >
               {/* 1. 사고 과정 (보조 정보 형태로 덜 두드러지게 토글 제공) */}
               {parsedReAct.hasReAct && (
@@ -466,14 +454,7 @@ export function MessageItem({
               {/* 3. Citation Card (Without the green pill badge) */}
               {(message.citationSource || message.citationQuote || message.sourceUrl) && (
                 <div
-                  className={`rounded-xl ${meta.bubbleBg} border ${meta.borderColor} text-xs`}
-                  style={{
-                    marginTop: '13px',
-                    paddingLeft: '18px',
-                    paddingRight: '18px',
-                    paddingTop: '12px',
-                    paddingBottom: '12px',
-                  }}
+                  className={`rounded-xl ${meta.bubbleBg} border ${meta.borderColor} text-xs mt-3 px-3 py-2.5 sm:px-4.5 sm:py-3`}
                 >
                   <div className="flex items-center gap-1.5 font-semibold text-slate-800 mb-1.5">
                     <BookOpen size={14} className={meta.textColor} />
@@ -482,11 +463,7 @@ export function MessageItem({
 
                   {message.citationQuote && (
                     <p
-                      className="text-slate-600 italic border-l-2 border-slate-300 leading-relaxed text-[12px] sm:text-[12.5px]"
-                      style={{
-                        paddingLeft: '12px',
-                        marginTop: '5px',
-                      }}
+                      className="text-slate-600 italic border-l-2 border-slate-300 leading-relaxed text-[12px] sm:text-[12.5px] pl-2.5 sm:pl-3 mt-1.5"
                     >
                       &ldquo;{message.citationQuote}&rdquo;
                     </p>
@@ -501,7 +478,7 @@ export function MessageItem({
                         href={message.sourceUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-indigo-600 hover:text-indigo-800 hover:underline truncate max-w-[280px] sm:max-w-[420px] font-mono text-[10.5px] font-medium"
+                        className="text-indigo-600 hover:text-indigo-800 hover:underline break-all truncate max-w-[190px] xs:max-w-[260px] sm:max-w-[420px] font-mono text-[10px] sm:text-[10.5px] font-medium"
                         title={message.sourceUrl}
                       >
                         {message.sourceTitle || message.sourceUrl}

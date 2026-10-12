@@ -33,3 +33,4 @@ tsconfig.tsbuildinfo
 scratch/
 events_export*
 *.pdf
+*.csv

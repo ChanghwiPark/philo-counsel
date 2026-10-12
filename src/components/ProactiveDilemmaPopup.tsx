@@ -109,8 +109,8 @@ export function ProactiveDilemmaPopup({
       />
 
       {/* 100% Solid Pure White Bottom Slide-up Nudge Card */}
-      <div className="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 w-[94vw] max-w-lg z-50 animate-slide-up-nudge">
-        <div className="w-full bg-white rounded-2xl sm:rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.35)] border border-slate-300 p-4 sm:p-5 space-y-3.5 transition-all">
+      <div className="fixed bottom-3 sm:bottom-6 pb-safe left-1/2 -translate-x-1/2 w-[94vw] max-w-lg z-50 animate-slide-up-nudge">
+        <div className="w-full bg-white rounded-2xl sm:rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.35)] border border-slate-300 p-3.5 sm:p-5 space-y-3 sm:space-y-3.5 transition-all">
           {/* Simple top row: Gentle Nudge Label & Close */}
           <div className="flex items-center justify-between gap-2">
             <div className="flex items-center gap-1.5 text-xs font-semibold text-indigo-700">

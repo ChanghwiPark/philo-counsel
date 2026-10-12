@@ -1476,7 +1476,7 @@ export default function PhilosophicalCounselingPage() {
   const userArchetypeIcon = reactions.length > 0 ? valueAnalysis.archetypeIcon : '🧭';
 
   return (
-    <div className="flex flex-col h-screen bg-slate-50 text-slate-800">
+    <div className="flex flex-col h-[100dvh] min-h-[100dvh] bg-slate-50 text-slate-800 overflow-hidden">
       {/* Header */}
       <AgentHeader
         onOpenHistory={() => setIsHistoryOpen(true)}
@@ -1491,16 +1491,16 @@ export default function PhilosophicalCounselingPage() {
       {/* Main Chat Area */}
       <main
         ref={chatContainerRef}
-        className="flex-1 overflow-y-auto px-4 py-6 sm:px-6 max-w-4xl w-full mx-auto"
+        className="flex-1 overflow-y-auto px-2.5 py-4 sm:px-6 sm:py-6 max-w-4xl w-full mx-auto"
       >
         {messages.length === 0 ? (
-          <div className="h-full flex flex-col items-center justify-center text-center p-4 sm:p-6 space-y-6 animate-fade-in max-w-xl mx-auto">
-            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 shadow-xs">
-              <Sparkles size={30} />
+          <div className="h-full flex flex-col items-center justify-center text-center p-3 sm:p-6 space-y-5 sm:space-y-6 animate-fade-in max-w-xl mx-auto">
+            <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 shadow-xs">
+              <Sparkles size={26} className="sm:w-[30px] sm:h-[30px]" />
             </div>
 
-            <div className="space-y-2">
-              <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
+            <div className="space-y-1.5 sm:space-y-2">
+              <h2 className="text-lg sm:text-2xl font-bold tracking-tight text-slate-900">
                 요즘, 풀리지 않는 고민이 있나요?
               </h2>
               <p className="text-xs sm:text-sm text-slate-500 leading-relaxed max-w-md mx-auto">
@@ -1655,21 +1655,21 @@ export default function PhilosophicalCounselingPage() {
       </main>
 
       {/* Input Form Bar */}
-      <footer className="border-t border-slate-200/80 bg-white/95 backdrop-blur-md p-3 sm:p-4">
+      <footer className="border-t border-slate-200/80 bg-white/95 backdrop-blur-md p-2.5 sm:p-4 pb-safe">
         <div className="max-w-4xl mx-auto">
           {/* Active Directed Reply Banner */}
           {replyTarget && (
-            <div className="mb-2 p-2.5 sm:px-3 sm:py-2 bg-indigo-50/95 border border-indigo-200/90 rounded-2xl flex items-center justify-between gap-2 animate-fade-in shadow-2xs">
-              <div className="flex items-center gap-2 min-w-0 flex-1">
-                <div className="w-6 h-6 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center shrink-0">
-                  <CornerDownLeft size={13} />
+            <div className="mb-2 p-2 sm:px-3 sm:py-2 bg-indigo-50/95 border border-indigo-200/90 rounded-2xl flex items-center justify-between gap-2 animate-fade-in shadow-2xs">
+              <div className="flex items-center gap-1.5 sm:gap-2 min-w-0 flex-1">
+                <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center shrink-0">
+                  <CornerDownLeft size={12} className="sm:w-[13px] sm:h-[13px]" />
                 </div>
-                <div className="flex items-center gap-2 min-w-0 flex-wrap">
+                <div className="flex items-center gap-1.5 sm:gap-2 min-w-0 flex-wrap">
                   <span className="font-semibold text-xs text-indigo-900 shrink-0">
                     @{replyTarget.targetAgentName}에게 답장 중
                   </span>
                   {replyTarget.targetSnippet && (
-                    <span className="text-[11.5px] text-indigo-700/80 truncate max-w-[220px] sm:max-w-md italic font-normal">
+                    <span className="text-[11px] sm:text-[11.5px] text-indigo-700/80 truncate max-w-[150px] xs:max-w-[220px] sm:max-w-md italic font-normal">
                       "{replyTarget.targetSnippet}"
                     </span>
                   )}
@@ -1692,7 +1692,7 @@ export default function PhilosophicalCounselingPage() {
               e.preventDefault();
               handleSendMessage();
             }}
-            className="relative flex items-center gap-2 bg-slate-50 border border-slate-200/90 rounded-2xl p-1.5 sm:p-2 focus-within:border-indigo-400 focus-within:ring-2 focus-within:ring-indigo-100 transition-all shadow-2xs"
+            className="relative flex items-center gap-1.5 sm:gap-2 bg-slate-50 border border-slate-200/90 rounded-2xl p-1.5 sm:p-2 focus-within:border-indigo-400 focus-within:ring-2 focus-within:ring-indigo-100 transition-all shadow-2xs"
           >
             <textarea
               ref={inputRef}
@@ -1705,31 +1705,32 @@ export default function PhilosophicalCounselingPage() {
                 isGeneratingFromApi
                   ? '사상가들이 생각을 정리하고 있습니다...'
                   : replyTarget
-                    ? `${replyTarget.targetAgentName}에게 보낼 질문이나 반론을 입력하세요... (Enter로 전송)`
+                    ? `${replyTarget.targetAgentName}에게 보낼 질문이나 반론을 입력하세요...`
                     : isAwaitingUserCheckin
-                      ? '사상가들에게 생각이나 선택을 들려주세요. 이해가 안 되거나 궁금한 점을 물어보셔도 좋습니다... (Enter로 전송)'
+                      ? '생각이나 선택을 들려주세요. 궁금한 점을 질문하셔도 좋습니다...'
                       : isAgentPlaying
-                        ? '사상가들이 대화 중입니다. 언제든 생각을 나누거나 끼어드세요... (Enter로 전송)'
-                        : '당신의 도덕적 갈등이나 인생의 고민을 들려주세요 (Enter로 전송)'
+                        ? '사상가들이 대화 중입니다. 언제든 생각을 나누거나 끼어드세요...'
+                        : '당신의 고민이나 딜레마를 들려주세요'
               }
               rows={1}
-              className="flex-1 bg-transparent px-3 py-2 text-sm text-slate-800 placeholder-slate-400 resize-none outline-none max-h-32 disabled:opacity-60"
+              className="flex-1 bg-transparent px-2.5 sm:px-3 py-1.5 sm:py-2 text-base sm:text-sm text-slate-800 placeholder-slate-400 resize-none outline-none max-h-32 disabled:opacity-60"
             />
             <button
               type="submit"
               disabled={!inputText.trim() || isGeneratingFromApi}
-              className="p-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 disabled:bg-slate-200 text-white disabled:text-slate-400 transition-all duration-200 shrink-0 shadow-xs"
+              className="p-2 sm:p-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 disabled:bg-slate-200 text-white disabled:text-slate-400 transition-all duration-200 shrink-0 shadow-xs"
               aria-label="메시지 전송"
             >
               {isGeneratingFromApi ? (
-                <Loader2 size={18} className="animate-spin text-slate-400" />
+                <Loader2 size={17} className="animate-spin text-slate-400" />
               ) : (
-                <Send size={18} />
+                <Send size={17} />
               )}
             </button>
           </form>
-          <div className="flex items-center justify-between text-[11px] text-slate-400 mt-2 px-1">
-            <span>Shift + Enter 줄바꿈 | 대화 내용은 실시간으로 보존됩니다</span>
+          <div className="flex items-center justify-between text-[10.5px] sm:text-[11px] text-slate-400 mt-1.5 sm:mt-2 px-1">
+            <span className="hidden sm:inline">Shift + Enter 줄바꿈 | 대화 내용은 실시간으로 보존됩니다</span>
+            <span className="sm:hidden">대화 내용 자동 저장</span>
             {messages.length > 0 && !isProcessing && (
               <button
                 type="button"
@@ -1737,7 +1738,7 @@ export default function PhilosophicalCounselingPage() {
                 className="text-slate-500 hover:text-slate-800 flex items-center gap-1 transition-colors"
               >
                 <RefreshCw size={11} />
-                <span>새로운 상담 시작</span>
+                <span>새 상담 시작</span>
               </button>
             )}
           </div>
